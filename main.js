@@ -99,6 +99,6 @@ app.post('/submit-recruitment', async (req, res) => {
   });
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+app.listen(5000, () => {
+  console.log(`Server is running on :${port}`);
 });
