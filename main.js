@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 const cors = require('cors');
-const http = require('http');
+const https = require('https');
 
 // Initialize Firebase Admin SDK with your service account key
 const serviceAccount = require('./key.json');
@@ -29,7 +29,7 @@ const SELF_PING_INTERVAL =  40 * 1000; // 5 minutes in milliseconds
 const SELF_URL = 'https://matrix-backend-vy0o.onrender.com/api/health'; // Replace with your deployed server's URL
 
 setInterval(() => {
-  http.get(SELF_URL, (res) => {
+  https.get(SELF_URL, (res) => {
     console.log(`Self-ping status: ${res.statusCode}`);
   }).on('error', (err) => {
     console.error(`Error during self-ping: ${err.message}`);
