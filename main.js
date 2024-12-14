@@ -37,7 +37,7 @@ app.get('/api/health', (req, res) => {
 
 // Periodic Self-Ping
 const SELF_PING_INTERVAL =  40 * 1000; // 5 minutes in milliseconds
-const SELF_URL = 'https://matrix-backend-vy0o.onrender.com/api/health'; // Replace with your deployed server's URL
+const SELF_URL = 'https://matrix-recruitment-2-0.onrender.com/api/health'; // Replace with your deployed server's URL
 
 setInterval(() => {
   https.get(SELF_URL, (res) => {
