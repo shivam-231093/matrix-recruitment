@@ -3,6 +3,11 @@ const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 const cors = require('cors');
 const https = require('https');
+const path = require('path');
+
+// Serve static files from the React build directory
+
+
 
 // Initialize Firebase Admin SDK with your service account key
 const serviceAccount = require('./key.json');
@@ -19,6 +24,12 @@ const port = 5000;
 // Middleware setup
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Serve index.html for any unknown routes (React routing)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 app.get('/api/health', (req, res) => {
   res.status(200).json({ message: 'Server is active and running!' });
