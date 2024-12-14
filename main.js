@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 const cors = require('cors');
+const http = require('http');
 
 // Initialize Firebase Admin SDK with your service account key
 const serviceAccount = require('./key.json');
@@ -18,6 +19,24 @@ const port = 5000;
 // Middleware setup
 app.use(cors());
 app.use(bodyParser.json());
+
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ message: 'Server is active and running!' });
+});
+
+// Periodic Self-Ping
+const SELF_PING_INTERVAL =  40 * 1000; // 5 minutes in milliseconds
+const SELF_URL = 'https://matrix-backend-vy0o.onrender.com/api/health'; // Replace with your deployed server's URL
+
+setInterval(() => {
+  http.get(SELF_URL, (res) => {
+    console.log(`Self-ping status: ${res.statusCode}`);
+  }).on('error', (err) => {
+    console.error(`Error during self-ping: ${err.message}`);
+  });
+}, SELF_PING_INTERVAL);
+
+
 
 // Endpoint to accept suggestion form data and store it in Firestore
 app.post('/submit-suggestion', async (req, res) => {
